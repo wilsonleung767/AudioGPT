@@ -11,17 +11,17 @@ def audio_to_text(mp3_file):
     # file_name = 'podcast'
     audio_folder = f'audio/{file_name}'
     audio_files = os.listdir(audio_folder)
-
+    print(audio_files)
     for i , file in enumerate(audio_files):
         # check if the file is an audio file
-        # if file.endswith(".mp3") or file.endswith(".wav") or file.endswith(".ogg"):
-            # audio_for_translation = open(file, "rb")
+        if file.endswith(".mp3") or file.endswith(".wav") or file.endswith(".ogg"):
+            audio_for_translation = open(f'{audio_folder}/{file}', "rb")
             # transcript = openai.Audio.translate("whisper-1", file)
         # Create a new folder when there is no existing folder
+        
         script_folder_path = f'script/{file_name}'
         file_inside_folder = os.path.basename(file)
-        file_inside_name = os.path.splitext(file_inside_folder)
-
+        file_inside_name = os.path.splitext(file_inside_folder)[0]
         if not os.path.exists(script_folder_path):
             os.makedirs(script_folder_path)
         with open(f'{script_folder_path}/{file_inside_name}_S{i}.txt', 'w') as f:
