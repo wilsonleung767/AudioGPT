@@ -1,10 +1,9 @@
 from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferMemory
-from langchain import LLMChain, PromptTemplate
-
-
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 import os
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = "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"
 
 # Split the script into parts according to chunk_size
 def split_text_to_list(filename, chunk_size):
@@ -14,7 +13,7 @@ def split_text_to_list(filename, chunk_size):
     splitted_text_list = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
     return splitted_text_list
     
-texts = split_text_to_list("script/cutVer.txt", 2500)
+texts = split_text_to_list('script\podcast\podcast_A0_S0.txt', 3000)
 
 
 llm = OpenAI(model_name="gpt-3.5-turbo", temperature= 0.6 )
@@ -42,7 +41,7 @@ llm_chain = LLMChain(
 for text_segment in texts:
     llm_chain.predict(human_input= f"This is the podcast script : {text_segment}")
 
-response = llm_chain.predict(human_input= "There is a hidden key word in the script, tell me what is that word")
+response = llm_chain.predict(human_input= "Summarize the podcast script in point form, keep all the detail, state the speaker of the content if possible")
 
 print(response)
 

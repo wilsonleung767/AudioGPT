@@ -1,10 +1,14 @@
-# import openai
+import openai
 import os
-from Split_audio import split_audio
-# openai.api_key = "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"
+import time
+# from Split_audio import split_audio
+openai.api_key = "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"
+
+
 def audio_to_text(mp3_file):
+    start_time = time.time()
 # mp3_file = 'audio/podcast/podcast.mp3'
-    split_audio(mp3_file,10)
+    # split_audio(mp3_file,10)
     file = os.path.basename(mp3_file)
     file_name = os.path.splitext(file)[0]
 
@@ -14,19 +18,23 @@ def audio_to_text(mp3_file):
 
     for i , file in enumerate(audio_files):
         # check if the file is an audio file
-        # if file.endswith(".mp3") or file.endswith(".wav") or file.endswith(".ogg"):
-            # audio_for_translation = open(file, "rb")
-            # transcript = openai.Audio.translate("whisper-1", file)
+        if file.endswith(".mp3") or file.endswith(".wav") or file.endswith(".ogg"):
+            audio_for_translation = open(f"{audio_folder}/{file}", "rb")
+            transcript = openai.Audio.translate("whisper-1", audio_for_translation)
         # Create a new folder when there is no existing folder
         script_folder_path = f'script/{file_name}'
         file_inside_folder = os.path.basename(file)
-        file_inside_name = os.path.splitext(file_inside_folder)
+        file_inside_name = os.path.splitext(file_inside_folder)[0]
 
         if not os.path.exists(script_folder_path):
             os.makedirs(script_folder_path)
         with open(f'{script_folder_path}/{file_inside_name}_S{i}.txt', 'w') as f:
-            f.write(f"yes \n")
+            f.write(f"{transcript.text} \n")
         print(f"script {i} generated")
+
+    end_time = time.time()
+    print(f"Audio Translation Time Used: {end_time - start_time} s")
+
 audio_to_text('audio/podcast.mp3')        
 # with open("script\cutVer.txt", 'r') as f:
 #     script_text = f.read()
