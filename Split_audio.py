@@ -15,6 +15,7 @@ def split_audio( mp3_file, minute_interval):
     # Split the audio into segments
     segments = [audio[i*minute_interval:(i+1)*minute_interval] for i in range(num_segments)]
 
+    
 
     # Create a new folder when there is no existing folder
     folder_path = f'audio/{filename}'
