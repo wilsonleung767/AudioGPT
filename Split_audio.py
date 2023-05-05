@@ -18,7 +18,7 @@ def split_audio( mp3_file, minute_interval):
     
 
     # Create a new folder when there is no existing folder
-    folder_path = f'audio/{filename}'
+    folder_path = f'audio/splitted_audio/{filename}'
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
