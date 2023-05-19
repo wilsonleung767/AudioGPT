@@ -5,7 +5,7 @@ from Split_audio import split_audio
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
-openai.api_key = os.getenv("API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 def audio_to_text(mp3_file):
@@ -25,21 +25,20 @@ def audio_to_text(mp3_file):
             audio_for_translation = open(f"{audio_folder}/{file}", "rb")
             transcript = openai.Audio.translate("whisper-1", audio_for_translation)
         # Create a new folder when there is no existing folder
-        script_folder_path = f'script/{file_name}'
-        # file_inside_folder = os.path.basename(file)
-        # file_inside_name = os.path.splitext(file_inside_folder)[0]
+      
 
-        if not os.path.exists(script_folder_path):
-            os.makedirs(script_folder_path)
+        # if not os.path.exists(script_folder_path):
+        #     os.makedirs(script_folder_path)
 
-        with open(f'{script_folder_path}/{file_name}.txt', 'a') as f:
+        with open(f'script/{file_name}.txt', 'a') as f:
             f.write(f"{transcript.text}")
-        print(f"Script Generated")
 
+    print(f"Script Generated")
     end_time = time.time()
     print(f"Audio Translation Time Used: {end_time - start_time} s")
 
-audio_to_text('audio/rid_acne_talk.mp3')        
+    return transcript.text
+   
 
 
 # with open("script\cutVer.txt", 'r') as f:
